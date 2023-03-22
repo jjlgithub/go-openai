@@ -53,6 +53,10 @@ func (c *Client) CreateChatCompletionStream(
 	if err != nil {
 		return
 	}
+	
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("status code: %d", resp.StatusCode)
+	}
 
 	stream = &ChatCompletionStream{
 		streamReader: &streamReader[ChatCompletionStreamResponse]{
